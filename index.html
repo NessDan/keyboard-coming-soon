@@ -14,9 +14,17 @@
     <script type="text/javascript">
       let kickstarterUrl = 'https://www.kickstarter.com/projects/edgeguard/keyboard-adapter';
       const urlParams = window.location.search;
+      const hasParams = urlParams && urlParams.length > 0;
+      const hasReferrer = document.referrer && document.referrer.length > 0;
 
-      if (urlParams && urlParams.length > 0) {
+      if (hasParams) {
         kickstarterUrl = kickstarterUrl + urlParams;
+
+        if (hasReferrer) {
+          kickstarterUrl = kickstarterUrl + "&actualRef=" + encodeURIComponent(document.referrer);
+        }
+      } else if (hasReferrer) {
+        kickstarterUrl = kickstarterUrl + "?actualRef=" + encodeURIComponent(document.referrer);
       }
 
       window.location = kickstarterUrl;
